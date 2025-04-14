@@ -114,8 +114,7 @@ void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QL
         tagEdit->clear();
 
         // 오늘 날짜는 경고 안띄워야됨
-        // 파일이름에 .json(5글자) 제거
-        if (QDate::fromString(filepath.section("/", -1).chopped(5), "yyyy-MM-dd") != QDate::currentDate()) {
+        if (QDate::fromString(QFileInfo(filepath).completeBaseName(), "yyyy-MM-dd") != QDate::currentDate()) {
             QMessageBox::warning(nullptr, "새로운 TODO", "작성된 TODO가 없습니다.");
         }
 
