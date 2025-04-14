@@ -177,7 +177,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_today_tag">
+              <widget class="QLineEdit" name="today_tag">
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
