@@ -21,6 +21,8 @@ public:
     void updateTagDate(const QString& dateStr, const QString& tag);
     void searchTagDates(QLineEdit* input, QListWidget* resultList);
 
+    void clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& date);
+
 
 };
 

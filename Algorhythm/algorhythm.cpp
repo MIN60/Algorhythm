@@ -60,54 +60,11 @@ Algorhythm::Algorhythm(QWidget *parent)
     connect(ui->pushButtonClear, &QPushButton::clicked, this, [=]() {
         int result = QMessageBox::question(this, "전체 삭제", "정말 삭제하시겠습니까?");
         if (result == QMessageBox::Yes) {
-            ui->listWidgetTasks->clear();
-            ui->today_tag->clear();
-
             QDate date = ui->calendarWidget->selectedDate();
-
-            QString dirPath = QDir::currentPath() + "/todo";
-            QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
-
-            if (QFile::exists(filepath)) {
-                QFile::remove(filepath);
-            }
-
-            // tag_list.json 내부 삭제
-            QString tagListPath = dirPath + "/tag_list.json";
-            QFile tagFile(tagListPath);
-
-            if (tagFile.exists() && tagFile.open(QIODevice::ReadOnly)) {
-                QByteArray data = tagFile.readAll();
-                tagFile.close();
-
-                QJsonParseError err;
-                QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-
-                if (!doc.isNull()) {
-                    QJsonArray tagArray = doc.array();
-                    QString targetDate = date.toString("yyyy-MM-dd");
-
-                    QJsonArray updatedArray;
-                    for (const auto& val : tagArray) {
-                        QJsonObject obj = val.toObject();
-                        if (obj["date"].toString() != targetDate) {
-                            updatedArray.append(obj);
-                        }
-                    }
-
-                    if (tagFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-                        QJsonDocument newDoc(updatedArray);
-                        tagFile.write(newDoc.toJson());
-                        tagFile.close();
-                    }
-                }
-            }
-
-            QMessageBox::information(nullptr, "삭제 완료", "삭제되었습니다.");
+            todo.clearTasks(ui->listWidgetTasks, ui->today_tag, date);
+            QMessageBox::information(this, "삭제 완료", "삭제되었습니다.");
         }
     });
-
-
 
 
 

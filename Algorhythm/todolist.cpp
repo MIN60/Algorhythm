@@ -96,6 +96,45 @@ void TodoList::deleteTask(QListWidget* listWidget, QWidget* taskWidget){
     }
 }
 
+
+// 날짜에 해당되는 tag, todo 삭제
+void TodoList::clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& date) {
+    listWidget->clear();
+    tagEdit->clear();
+
+    QString dirPath = QDir::currentPath() + "/todo";
+    QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
+
+    if (QFile::exists(filepath)) {
+        QFile::remove(filepath);
+    }
+    //json에서도 제거
+    QString tagPath = QDir::currentPath() + "/todo/tag_list.json";
+    QFile tagFile(tagPath);
+
+    if (tagFile.open(QIODevice::ReadOnly)) {
+        QByteArray data = tagFile.readAll();
+        tagFile.close();
+
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonArray tagArray = doc.array();
+
+        for (int i = 0; i < tagArray.size(); ++i) {
+            QJsonObject obj = tagArray[i].toObject();
+            if (obj["date"].toString() == date.toString("yyyy-MM-dd")) {
+                tagArray.removeAt(i);
+                break;
+            }
+        }
+
+        if (tagFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            tagFile.write(QJsonDocument(tagArray).toJson());
+            tagFile.close();
+        }
+    }
+}
+
+
 void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QLineEdit* tagEdit){
     QFile file(filepath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
