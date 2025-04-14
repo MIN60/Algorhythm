@@ -19,7 +19,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     // 시작 시 기존 todo있으면 불러오기
     QDate today = ui->calendarWidget->selectedDate();
     QString dirPath = QDir::currentPath() + "/todo";
-    QString filepath = dirPath + "/" + today.toString("yyyy-MM-dd") + ".json";
+    QString filepath = todo.getTodoPath(today);
     todo.loadFromFile(ui->listWidgetTasks, filepath, ui->today_tag);
 
 
@@ -42,18 +42,13 @@ Algorhythm::Algorhythm(QWidget *parent)
     });
 
     // 저장
-    connect(ui->pushButtonSave, &QPushButton::clicked, this, [=](){
+    connect(ui->pushButtonSave, &QPushButton::clicked, this, [=]() {
         QDate date = ui->calendarWidget->selectedDate();
-        QString dirPath = QDir::currentPath() + "/todo";
-        QDir dir(dirPath);
+        if (!todo.isTagValid(ui->today_tag)) return;
 
-        if (!dir.exists()) {
-            dir.mkpath(".");
-        }
-
-        QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
-
+        QString filepath = todo.getTodoPath(date);
         QString tagText = ui->today_tag->text().trimmed();
+
         todo.saveToFile(ui->listWidgetTasks, filepath, tagText, date);
         todo.updateTagDate(date.toString("yyyy-MM-dd"), tagText);
     });
@@ -85,7 +80,7 @@ Algorhythm::Algorhythm(QWidget *parent)
 
         ui->calendarWidget->setSelectedDate(date);
         QString dirPath = QDir::currentPath() + "/todo";
-        QString filepath = dirPath + "/" + dateStr + ".json";
+        QString filepath = todo.getTodoPath(date);
 
         if (!QFile::exists(filepath)) {
             QMessageBox::information(this, "알림", "해당 날짜의 TODO 파일이 존재하지 않습니다.");

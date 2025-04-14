@@ -347,3 +347,23 @@ void TodoList::handleChangeDate(QCalendarWidget* calendar, QListWidget* listWidg
 }
 
 
+QString TodoList::getTodoPath(const QDate& date) const {
+    QString dirPath = QDir::currentPath() + "/todo";
+    QDir dir(dirPath);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+    return dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
+}
+
+bool TodoList::isTagValid(QLineEdit* tagEdit) const {
+    if (!tagEdit) return false;
+    QString tagText = tagEdit->text().trimmed();
+    if (tagText.isEmpty()) {
+        QMessageBox::warning(nullptr, "태그 없음", "먼저 태그를 입력하세요.");
+        return false;
+    }
+    return true;
+}
+
+

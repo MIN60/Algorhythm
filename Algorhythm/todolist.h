@@ -25,6 +25,10 @@ public:
     void clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& date); // 삭제버튼 기능
     void handleChangeDate(QCalendarWidget* calendar, QListWidget* listWidget, QLineEdit* tagEdit); //날짜 이동
 
+    QString getTodoPath(const QDate& date) const;
+    bool isTagValid(QLineEdit* tagEdit) const;
+
+
 
 private:
     bool isModified = false;
