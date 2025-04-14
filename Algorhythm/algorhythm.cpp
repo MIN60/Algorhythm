@@ -31,14 +31,7 @@ Algorhythm::Algorhythm(QWidget *parent)
 
     // 저장
     connect(ui->pushButtonSave, &QPushButton::clicked, this, [=]() {
-        QDate date = ui->calendarWidget->selectedDate();
-        if (!todo.isTagValid(ui->today_tag)) return;
-
-        QString filepath = todo.getTodoPath(date);
-        QString tagText = ui->today_tag->text().trimmed();
-
-        todo.saveToFile(ui->listWidgetTasks, filepath, tagText, date);
-        todo.updateTagDate(date.toString("yyyy-MM-dd"), tagText);
+        todo.handleSave(ui->listWidgetTasks, ui->today_tag, ui->calendarWidget->selectedDate());
     });
 
 

@@ -361,6 +361,19 @@ void TodoList::handleAddTask(QListWidget* listWidget, QLineEdit* taskEdit, QLine
 }
 
 
+void TodoList::handleSave(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& selectedDate)
+{
+    if (!isTagValid(tagEdit)) return;
+
+    QString filepath = getTodoPath(selectedDate);
+    QString tagText = tagEdit->text().trimmed();
+
+    saveToFile(listWidget, filepath, tagText, selectedDate);
+    updateTagDate(selectedDate.toString("yyyy-MM-dd"), tagText);
+}
+
+
+
 QString TodoList::getTodoPath(const QDate& date) const {
     QString dirPath = QDir::currentPath() + "/todo";
     QDir dir(dirPath);
