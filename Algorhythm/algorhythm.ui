@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1046</width>
-    <height>688</height>
+    <width>1108</width>
+    <height>789</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,7 +68,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="USER">
        <attribute name="title">
@@ -98,8 +98,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>1011</width>
-          <height>451</height>
+          <width>743</width>
+          <height>570</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -113,10 +113,50 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <widget class="QWidget" name="calender" native="true"/>
+             <widget class="QWidget" name="calender" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <widget class="QCalendarWidget" name="calendarWidget">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
             <item>
-             <widget class="QWidget" name="searchtag" native="true"/>
+             <widget class="QWidget" name="searchtag" native="true">
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <item>
+                <widget class="QLabel" name="label_3">
+                 <property name="font">
+                  <font>
+                   <family>Noto Sans KR</family>
+                   <pointsize>10</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>태그 검색</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="tag_input"/>
+               </item>
+               <item>
+                <widget class="QListWidget" name="tag_search_result">
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -143,7 +183,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1046</width>
+     <width>1108</width>
      <height>26</height>
     </rect>
    </property>
