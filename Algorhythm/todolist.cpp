@@ -366,4 +366,23 @@ bool TodoList::isTagValid(QLineEdit* tagEdit) const {
     return true;
 }
 
+void TodoList::moveDate(const QDate& date, QCalendarWidget* calendar, QListWidget* listWidget, QLineEdit* tagEdit)
+{
+    if (!date.isValid()) {
+        QMessageBox::warning(nullptr, "날짜 오류", "날짜 데이터에 오류가 있습니다.");
+        return;
+    }
+
+    calendar->setSelectedDate(date);
+
+    QString filepath = getTodoPath(date);
+    if (!QFile::exists(filepath)) {
+        QMessageBox::information(nullptr, "알림", "해당 날짜의 TODO 파일이 존재하지 않습니다.");
+        return;
+    }
+
+    loadFromFile(listWidget, filepath, tagEdit);
+}
+
+
 

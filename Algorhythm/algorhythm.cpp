@@ -68,34 +68,18 @@ Algorhythm::Algorhythm(QWidget *parent)
         todo.searchTagDates(ui->tag_input, ui->tag_search_result);
     });
 
+
     // 태그 검색시 더블클릭하면 이동하게
     connect(ui->tag_search_result, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem* item) {
-        QString dateStr = item->text().trimmed();
-        QDate date = QDate::fromString(dateStr, "yyyy-MM-dd");
-
-        if (!date.isValid()) {
-            QMessageBox::warning(this, "날짜 오류", "날짜 데이터에 오류가 있습니다.");
-            return;
-        }
-
-        ui->calendarWidget->setSelectedDate(date);
-        QString dirPath = QDir::currentPath() + "/todo";
-        QString filepath = todo.getTodoPath(date);
-
-        if (!QFile::exists(filepath)) {
-            QMessageBox::information(this, "알림", "해당 날짜의 TODO 파일이 존재하지 않습니다.");
-            return;
-        }
-
-        todo.loadFromFile(ui->listWidgetTasks, filepath, ui->today_tag);
+        QDate date = QDate::fromString(item->text().trimmed(), "yyyy-MM-dd");
+        todo.moveDate(date, ui->calendarWidget, ui->listWidgetTasks, ui->today_tag);
     });
+
 
     // 그냥 이동하면 경고
     connect(ui->calendarWidget, &QCalendarWidget::clicked, this, [=](const QDate &date) {
         todo.handleChangeDate(ui->calendarWidget, ui->listWidgetTasks, ui->today_tag);
     });
-
-
 
 
 }

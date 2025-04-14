@@ -27,6 +27,8 @@ public:
 
     QString getTodoPath(const QDate& date) const;
     bool isTagValid(QLineEdit* tagEdit) const;
+    void moveDate(const QDate& date, QCalendarWidget* calendar, QListWidget* listWidget, QLineEdit* tagEdit);
+
 
 
 
