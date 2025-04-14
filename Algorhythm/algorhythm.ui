@@ -227,14 +227,22 @@
             <widget class="QListWidget" name="listWidgetTasks"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButtonExit">
-             <property name="styleSheet">
-              <string notr="true">font-size: 14pt; font-weight: bold;</string>
-             </property>
-             <property name="text">
-              <string>저장하기</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="bottomButtonLayout">
+             <item>
+              <widget class="QPushButton" name="pushButtonSave">
+               <property name="text">
+                <string>저장하기</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonClear">
+               <property name="text">
+                <string>삭제하기</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

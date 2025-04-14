@@ -86,17 +86,6 @@ void TodoList::addTask(QListWidget* listWidget, const QString& taskText){
 }
 
 
-// void TodoList::checkTask(QListWidgetItem* item){
-//     QFont font = item->font();
-//     if(item->checkState() == Qt::Checked){
-//         font.setStrikeOut(true);
-//     }else{
-//         font.setStrikeOut(false);
-//     }
-//     item->setFont(font);
-// }
-
-
 void TodoList::deleteTask(QListWidget* listWidget, QWidget* taskWidget){
     for(int i=0; i<listWidget->count(); ++i){
         QListWidgetItem* item = listWidget->item(i);
@@ -286,7 +275,7 @@ void TodoList::searchTagDates(QLineEdit* input, QListWidget* resultList)
     }
 
     if (resultList->count() == 0) {
-        resultList->addItem("해당 태그의 날짜가 없습니다.");
+        resultList->addItem("해당 태그를 가진 날짜가 없습니다.");
     }
 }
 

@@ -4,6 +4,9 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFileDialog>
+#include <QJsonParseError>
+#include <QJsonArray>
+#include <QJsonObject>
 
 TodoList todo;
 
@@ -39,7 +42,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     });
 
     // 저장
-    connect(ui->pushButtonExit, &QPushButton::clicked, this, [=](){
+    connect(ui->pushButtonSave, &QPushButton::clicked, this, [=](){
         QDate date = ui->calendarWidget->selectedDate();
         QString dirPath = QDir::currentPath() + "/todo";
         QDir dir(dirPath);
@@ -52,6 +55,59 @@ Algorhythm::Algorhythm(QWidget *parent)
         todo.saveToFile(ui->listWidgetTasks, filepath, ui->today_tag->text().trimmed(), date);
 
     });
+
+    //삭제
+    connect(ui->pushButtonClear, &QPushButton::clicked, this, [=]() {
+        int result = QMessageBox::question(this, "전체 삭제", "정말 삭제하시겠습니까?");
+        if (result == QMessageBox::Yes) {
+            ui->listWidgetTasks->clear();
+            ui->today_tag->clear();
+
+            QDate date = ui->calendarWidget->selectedDate();
+
+            QString dirPath = QDir::currentPath() + "/todo";
+            QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
+
+            if (QFile::exists(filepath)) {
+                QFile::remove(filepath);
+            }
+
+            // tag_list.json 내부 삭제
+            QString tagListPath = dirPath + "/tag_list.json";
+            QFile tagFile(tagListPath);
+
+            if (tagFile.exists() && tagFile.open(QIODevice::ReadOnly)) {
+                QByteArray data = tagFile.readAll();
+                tagFile.close();
+
+                QJsonParseError err;
+                QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+
+                if (!doc.isNull()) {
+                    QJsonArray tagArray = doc.array();
+                    QString targetDate = date.toString("yyyy-MM-dd");
+
+                    QJsonArray updatedArray;
+                    for (const auto& val : tagArray) {
+                        QJsonObject obj = val.toObject();
+                        if (obj["date"].toString() != targetDate) {
+                            updatedArray.append(obj);
+                        }
+                    }
+
+                    if (tagFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+                        QJsonDocument newDoc(updatedArray);
+                        tagFile.write(newDoc.toJson());
+                        tagFile.close();
+                    }
+                }
+            }
+
+            QMessageBox::information(nullptr, "삭제 완료", "삭제되었습니다.");
+        }
+    });
+
+
 
 
 
