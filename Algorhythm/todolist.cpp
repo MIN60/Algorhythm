@@ -70,6 +70,7 @@ void TodoList::addTask(QListWidget* listWidget, const QString& taskText){
     taskWidget->setLayout(layout);
 
     listWidget->setItemWidget(item, taskWidget);
+    isModified = true;
 
     QObject::connect(checkbox, &QCheckBox::checkStateChanged, [checkbox](int state){
         QFont font = checkbox->font();
@@ -94,6 +95,7 @@ void TodoList::deleteTask(QListWidget* listWidget, QWidget* taskWidget){
             break;
         }
     }
+    isModified = true;
 }
 
 
@@ -141,13 +143,15 @@ void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QL
         listWidget->clear();
         tagEdit->clear();
 
-        // 오늘 날짜는 경고 안띄워야됨
-        if (QDate::fromString(QFileInfo(filepath).completeBaseName(), "yyyy-MM-dd") != QDate::currentDate()) {
+        QDate fileDate = QDate::fromString(QFileInfo(filepath).completeBaseName(), "yyyy-MM-dd");
+
+        if (fileDate != QDate::currentDate() && !isModified) {
             QMessageBox::warning(nullptr, "새로운 TODO", "작성된 TODO가 없습니다.");
         }
 
         return;
     }
+
 
     QByteArray data = file.readAll();
     file.close();
@@ -206,6 +210,7 @@ void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QL
             checkBox->setFont(font);
         });
     }
+    isModified = false;
 
 }
 void TodoList::saveToFile(QListWidget* listWidget, const QString& filepath, const QString& tagText, const QDate& selectedDate){
@@ -237,6 +242,7 @@ void TodoList::saveToFile(QListWidget* listWidget, const QString& filepath, cons
         file.write(doc.toJson());
         file.close();
         QMessageBox::information(nullptr, "저장 완료", "할 일이 저장되었습니다!");
+        isModified = false;
     } else {
         QMessageBox::warning(nullptr, "저장 실패", "파일을 저장할 수 없습니다.");
     }
@@ -317,4 +323,27 @@ void TodoList::searchTagDates(QLineEdit* input, QListWidget* resultList)
         resultList->addItem("해당 태그를 가진 날짜가 없습니다.");
     }
 }
+
+void TodoList::handleChangeDate(QCalendarWidget* calendar, QListWidget* listWidget, QLineEdit* tagEdit) {
+    QDate selectedDate = calendar->selectedDate();
+
+    if (isModified) {
+        int result = QMessageBox::warning(nullptr, "저장되지 않음",
+                                          "저장하지 않은 작업이 있습니다. 그래도 이동하시겠습니까?",
+                                          QMessageBox::Yes | QMessageBox::No);
+
+        if (result == QMessageBox::No) {
+            calendar->setSelectedDate(curSelectedDate);  // 이전 날짜로 복구
+            return;
+        }
+    }
+
+    isModified = false;
+    curSelectedDate = selectedDate;
+
+    QString dirPath = QDir::currentPath() + "/todo";
+    QString filepath = dirPath + "/" + selectedDate.toString("yyyy-MM-dd") + ".json";
+    loadFromFile(listWidget, filepath, tagEdit);
+}
+
 

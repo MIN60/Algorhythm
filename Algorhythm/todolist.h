@@ -4,6 +4,7 @@
 #include<QListWidgetItem>
 #include<QString>
 #include<QLabel>
+#include <QCalendarWidget>
 
 class TodoList
 {
@@ -21,7 +22,13 @@ public:
     void updateTagDate(const QString& dateStr, const QString& tag);
     void searchTagDates(QLineEdit* input, QListWidget* resultList);
 
-    void clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& date);
+    void clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& date); // 삭제버튼 기능
+    void handleChangeDate(QCalendarWidget* calendar, QListWidget* listWidget, QLineEdit* tagEdit); //날짜 이동
+
+
+private:
+    bool isModified = false;
+    QDate curSelectedDate = QDate::currentDate();
 
 
 };

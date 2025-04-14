@@ -52,9 +52,12 @@ Algorhythm::Algorhythm(QWidget *parent)
         }
 
         QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
-        todo.saveToFile(ui->listWidgetTasks, filepath, ui->today_tag->text().trimmed(), date);
 
+        QString tagText = ui->today_tag->text().trimmed();
+        todo.saveToFile(ui->listWidgetTasks, filepath, tagText, date);
+        todo.updateTagDate(date.toString("yyyy-MM-dd"), tagText);
     });
+
 
     //삭제
     connect(ui->pushButtonClear, &QPushButton::clicked, this, [=]() {
@@ -64,37 +67,6 @@ Algorhythm::Algorhythm(QWidget *parent)
             todo.clearTasks(ui->listWidgetTasks, ui->today_tag, date);
             QMessageBox::information(this, "삭제 완료", "삭제되었습니다.");
         }
-    });
-
-
-
-    // 캘린더 버튼 누르면 불러오기
-    connect(ui->calendarWidget, &QCalendarWidget::clicked, this, [=](const QDate &date) {
-        QString dirPath = QDir::currentPath() + "/todo";
-        QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
-        todo.loadFromFile(ui->listWidgetTasks, filepath, ui->today_tag);
-    });
-
-    connect(ui->pushButtonAddTag, &QPushButton::clicked, this, [=](){
-        QString tagText = ui->today_tag->text().trimmed();
-        if (tagText.isEmpty()) {
-            QMessageBox::warning(this, "태그 없음", "태그를 입력해주세요!");
-            return;
-        }
-
-        QDate date = ui->calendarWidget->selectedDate();
-        QString dirPath = QDir::currentPath() + "/todo";
-        QDir dir(dirPath);
-
-        if (!dir.exists()) {
-            dir.mkpath(".");  // 폴더 없으면 생성
-        }
-
-        QString filepath = dirPath + "/" + date.toString("yyyy-MM-dd") + ".json";
-        qDebug() << "태그/할 일 저장 경로:" << filepath;
-
-        todo.saveTag(ui->today_tag, filepath);
-        todo.updateTagDate(date.toString("yyyy-MM-dd"), tagText);
     });
 
     connect(ui->tag_input, &QLineEdit::returnPressed, this, [=]() {
@@ -121,6 +93,11 @@ Algorhythm::Algorhythm(QWidget *parent)
         }
 
         todo.loadFromFile(ui->listWidgetTasks, filepath, ui->today_tag);
+    });
+
+    // 그냥 이동하면 경고
+    connect(ui->calendarWidget, &QCalendarWidget::clicked, this, [=](const QDate &date) {
+        todo.handleChangeDate(ui->calendarWidget, ui->listWidgetTasks, ui->today_tag);
     });
 
 
