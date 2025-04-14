@@ -346,6 +346,20 @@ void TodoList::handleChangeDate(QCalendarWidget* calendar, QListWidget* listWidg
     loadFromFile(listWidget, filepath, tagEdit);
 }
 
+void TodoList::handleAddTask(QListWidget* listWidget, QLineEdit* taskEdit, QLineEdit* tagEdit)
+{
+    QString taskText = taskEdit->text().trimmed();
+    if (taskText.isEmpty()) {
+        QMessageBox::warning(nullptr, "경고", "할 일을 입력해주세요!");
+        return;
+    }
+
+    if (!isTagValid(tagEdit)) return;
+
+    addTask(listWidget, taskText);
+    taskEdit->clear();
+}
+
 
 QString TodoList::getTodoPath(const QDate& date) const {
     QString dirPath = QDir::currentPath() + "/todo";

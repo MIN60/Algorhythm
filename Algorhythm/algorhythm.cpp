@@ -24,22 +24,10 @@ Algorhythm::Algorhythm(QWidget *parent)
 
 
     //todolist ui연결
-    connect(ui->pushButtonAdd, &QPushButton::clicked, this, [=](){
-        QString taskText = ui->lineEditTask->text();
-        if (taskText.isEmpty()) {
-            QMessageBox::warning(this, "경고", "할 일을 입력해주세요!");
-            return;
-        }
-
-        // 태그가 비어있으면 경고
-        if (ui->today_tag->text().trimmed().isEmpty()) {
-            QMessageBox::warning(this, "태그 없음", "먼저 태그를 입력해주세요!");
-            return;
-        }
-
-        todo.addTask(ui->listWidgetTasks, taskText);
-        ui->lineEditTask->clear();
+    connect(ui->pushButtonAdd, &QPushButton::clicked, this, [=]() {
+        todo.handleAddTask(ui->listWidgetTasks, ui->lineEditTask, ui->today_tag);
     });
+
 
     // 저장
     connect(ui->pushButtonSave, &QPushButton::clicked, this, [=]() {
