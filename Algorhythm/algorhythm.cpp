@@ -9,7 +9,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     ui->setupUi(this);
 
     QTimer::singleShot(0, this, [this]() {
-        ui->user_greeting->setUserName("김땡땡");
+        ui->user_greeting->setUserName("로그인이 필요합니다.");
         ui->user_greeting->setTier("Gold I", 1234);
     });
 
