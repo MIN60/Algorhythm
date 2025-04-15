@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>bronze_1.PNG</file>
+        <file>bronze_2.PNG</file>
+        <file>bronze_3.PNG</file>
+        <file>bronze_4.PNG</file>
+        <file>bronze_5.PNG</file>
+        <file>diamond_1.PNG</file>
+        <file>diamond_2.PNG</file>
+        <file>diamond_3.PNG</file>
+        <file>diamond_4.PNG</file>
+        <file>diamond_5.PNG</file>
+        <file>gold_1.PNG</file>
+        <file>gold_2.PNG</file>
+        <file>gold_4.PNG</file>
+        <file>gold_5.PNG</file>
+        <file>Master.PNG</file>
+        <file>platinum_1.PNG</file>
+        <file>platinum_2.PNG</file>
+        <file>platinum_3.PNG</file>
+        <file>platinum_4.PNG</file>
+        <file>ruby_1.PNG</file>
+        <file>ruby_2.PNG</file>
+        <file>ruby_3.PNG</file>
+        <file>ruby_4.PNG</file>
+        <file>ruby_5.PNG</file>
+        <file>silver_1.PNG</file>
+        <file>silver_2.PNG</file>
+        <file>silver_4.PNG</file>
+        <file>silver_5.PNG</file>
+        <file>l_o.png</file>
+    </qresource>
+</RCC>

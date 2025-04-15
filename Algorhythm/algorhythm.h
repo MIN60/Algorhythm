@@ -1,7 +1,8 @@
 #ifndef ALGORHYTHM_H
 #define ALGORHYTHM_H
-
+#include "networkmanager.h"
 #include <QMainWindow>
+#include "networkmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,6 +24,8 @@ private slots:
 
 private:
     Ui::Algorhythm *ui;
+    NetworkManager* networkManager;
     QTimer* timeTimer;
+    void setupWidgets();
 };
 #endif // ALGORHYTHM_H
