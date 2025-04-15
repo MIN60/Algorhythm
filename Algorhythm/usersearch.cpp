@@ -108,7 +108,6 @@ void UserSearch::filterList(const QString& input)
 void UserSearch::searchProblem(const QString& problemId)
 {
     // 검색 시작 시 상태 표시
-    //statusLabel->setText("검색 중...");
     resultList->clear();
 
     if (networkManager) {
@@ -163,14 +162,23 @@ void UserSearch::handleProblemData(const QJsonObject &problemData)
 
         //statusLabel->setText("검색 완료");
     } else {
-        statusLabel->setText("문제를 찾을 수 없습니다.");
+        QListWidgetItem* item = new QListWidgetItem("문제를 찾을 수 없습니다.");
+        item->setFlags(Qt::NoItemFlags);  // 클릭 불가능
+        resultList->addItem(item);
     }
+
+    statusLabel->clear();
 }
 
 void UserSearch::handleNetworkError(const QString &errorMsg)
 {
-    //statusLabel->setText("오류: " + errorMsg);
-    statusLabel->setText("문제가 없습니다.");
+    resultList->clear();
+
+    QListWidgetItem* item = new QListWidgetItem("문제를 찾을 수 없습니다.");
+    item->setFlags(Qt::NoItemFlags);
+    resultList->addItem(item);
+
+    statusLabel->clear();
 }
 
 void UserSearch::addProblemToList(const Problem& p)
