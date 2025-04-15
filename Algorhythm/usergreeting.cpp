@@ -45,12 +45,12 @@ UserGreeting::UserGreeting(QWidget* parent)
     layout->setSpacing(40);
     layout->setContentsMargins(15, 15, 15, 15);
     loginDialog = new QDialog(this);
-    loginDialog->setWindowTitle("Solved.ac 로그인");
+    loginDialog->setWindowTitle("solved.ac 로그인");
     loginDialog->setMinimumWidth(300);
 
     QVBoxLayout* dialogLayout = new QVBoxLayout(loginDialog);
 
-    QLabel* usernameLabel = new QLabel("백준 아이디를 입력하세요:", loginDialog);
+    QLabel* usernameLabel = new QLabel("solved.ac에 연동된 백준 아이디를 입력하세요:", loginDialog);
     usernameInput = new QLineEdit(loginDialog);
 
     loginButton = new QPushButton("로그인", loginDialog);
@@ -200,8 +200,9 @@ void UserGreeting::handleMainButtonClick()
 void UserGreeting::handleNetworkError(const QString &errorMsg)
 {
     if (loginDialog->isVisible()) {
-        statusLabel->setText("네트워크 오류: " + errorMsg);
+        statusLabel->setText("아이디를 다시 확인해주세요.");
     } else {
+
         QMessageBox::critical(this, "네트워크 오류", "연결 오류: " + errorMsg);
     }
 }
