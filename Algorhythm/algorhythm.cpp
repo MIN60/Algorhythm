@@ -7,6 +7,7 @@
 #include <QJsonParseError>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QTimer>
 
 TodoList todo;
 
@@ -19,8 +20,12 @@ Algorhythm::Algorhythm(QWidget *parent)
 
     ui->USER->setStyleSheet("background-color: white;");
     ui->TODO->setStyleSheet("background-color: white;");
-
     this->setStyleSheet("background-color: #F9FAFB;");
+
+    timeTimer = new QTimer(this);
+    connect(timeTimer, &QTimer::timeout, this, &Algorhythm::updateTimeLabel);
+    timeTimer->start(1000);
+    updateTimeLabel();
 
     todo.applySectionStyle(ui->calender_item);
     //todo.applySectionStyle(ui->search_tag);
@@ -114,6 +119,12 @@ void Algorhythm::applyTabStyle(QTabWidget* tabWidget)
     )");
 }
 
+void Algorhythm::updateTimeLabel()
+{
+    QDateTime now = QDateTime::currentDateTime();
+    QString timeStr = now.toString("MM/dd hh:mm AP");
+    ui->timeLabel->setText(timeStr);
+}
 
 
 Algorhythm::~Algorhythm()

@@ -34,7 +34,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="timeLabel">
         <property name="font">
          <font>
           <pointsize>15</pointsize>
@@ -261,6 +261,12 @@
                  <width>40</width>
                  <height>0</height>
                 </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>18</pointsize>
+                </font>
                </property>
                <property name="autoFillBackground">
                 <bool>false</bool>
