@@ -26,30 +26,23 @@ Algorhythm::Algorhythm(QWidget *parent)
     qDebug() << "[DEBUG] Algorhythm::networkManager is:" << networkManager;
     ui->user_chart->clearChart();
 
-    //GREET 더미
     // 네트워크 매니저 생성 및 설정
     networkManager = new NetworkManager(this);
     ui->user_search->setNetworkManager(networkManager);
     ui->user_recommend->setNetworkManager(networkManager);
 
     ui->user_greeting->setUserName("로그인이 필요합니다");
-    //ui->user_greeting->setTier("Gold I", 1234);
 
     // 차트
     connect(networkManager, &NetworkManager::onGraphDataReceived,
             ui->user_chart, &UserChart::drawChart);
 
-    //networkManager->graphData("nlnf44");
-
-    // 임시 로그인
-    //QString userAccount = "nlnf44";
     ui->user_greeting->setUserChart(ui->user_chart);
-    //networkManager->graphData(userAccount);
 
     qDebug() << "Algorhythm UI 설정 완료";
     qDebug() << "UserSearch 표시 상태:" << ui->user_search->isVisible();
 
-    // 새로운 방식으로 신호-슬롯 연결 (Qt5 방식)
+    // 신호-슬롯 연결
     connect(ui->user_greeting, &UserGreeting::loginSuccess,
             ui->user_recommend, &UserRecommend::loadRecommendations);
 
@@ -68,7 +61,6 @@ Algorhythm::Algorhythm(QWidget *parent)
     updateTimeLabel();
 
     todo.applySectionStyle(ui->calender_item);
-    //todo.applySectionStyle(ui->search_tag);
     todo.applySectionStyle(ui->todo_item);
 
 
@@ -177,7 +169,7 @@ void Algorhythm::applyTabStyle(QTabWidget* tabWidget)
 void Algorhythm::updateTimeLabel()
 {
     QDateTime now = QDateTime::currentDateTime();
-    QString timeStr = now.toString("MM/dd hh:mm AP");
+    QString timeStr = now.toString("MM/dd   hh:mm AP");
     ui->timeLabel->setText(timeStr);
 }
 

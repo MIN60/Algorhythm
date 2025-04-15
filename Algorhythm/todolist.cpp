@@ -62,7 +62,7 @@ void TodoList::addTask(QListWidget* listWidget, const QString& taskText){
     //layout->setContentsMargins(0,0,0,0);
 
     QCheckBox* checkbox = new QCheckBox(taskText, taskWidget);
-    QPushButton* delButton = new QPushButton(QIcon::fromTheme("edit-delete"), "", taskWidget); // 기본 삭제 아이콘, 추후 변경
+    QPushButton* delButton = new QPushButton(QIcon::fromTheme("edit-delete"), "", taskWidget); // 기본 삭제 아이콘
     delButton->setFixedSize(24,24);
 
     layout->addWidget(checkbox);
