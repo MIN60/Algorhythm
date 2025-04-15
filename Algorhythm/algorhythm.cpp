@@ -12,6 +12,16 @@ Algorhythm::Algorhythm(QWidget *parent)
     qDebug() << ui->user_search->isVisible();
 
 
+    // 추천 문제 더미
+    QList<RecommendProblem> recList = {
+        { "1260", "DFS와 BFS", "실버 2" },
+        { "11725", "트리의 부모 찾기", "실버 1" },
+        { "1753", "최단경로", "골드 5" }
+    };
+
+    ui->user_recommend->setRecommend(recList);
+
+
 }
 
 Algorhythm::~Algorhythm()

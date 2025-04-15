@@ -35,7 +35,6 @@ UserTierCard::UserTierCard(QWidget* parent)
     cardLayout->addWidget(solvedLabel);
     cardLayout->setSpacing(5);
     cardFrame->setLayout(cardLayout);
-
     layout->addWidget(cardFrame);
     layout->setContentsMargins(0, 0, 0, 0);
     setLayout(layout);
