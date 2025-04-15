@@ -11,6 +11,8 @@
 #include <QToolTip>
 
 #include <QMouseEvent>
+#include "networkmanager.h"
+#include <QNetworkAccessManager>
 
 UserChart::UserChart(QWidget* parent)
     : QWidget(parent)
@@ -34,6 +36,8 @@ void UserChart::drawChart(const QJsonObject& graphData)
 {
     if (!graphData.contains("level") || !graphData["level"].isObject())
         return;
+
+    chart->setTitle("티어별 푼 문제 수");
 
     QJsonObject levelObj = graphData["level"].toObject();
 
@@ -108,3 +112,59 @@ void UserChart::drawChart(const QJsonObject& graphData)
     series->attachAxis(axisY);
 }
 
+void UserChart::setUsername(const QString& username)
+{
+    if (username.isEmpty()) return;
+
+    if (!networkManager) {
+        networkManager = new NetworkManager(this);
+        connect(networkManager, &NetworkManager::onGraphDataReceived, this, &UserChart::drawChart);
+    }
+
+    networkManager->graphData(username);
+}
+
+
+void UserChart::handleUserChartData(const QJsonObject& userData)
+{
+    if (userData.contains("level")) {
+        drawChart(userData);
+    }
+}
+
+
+void UserChart::clearChart()
+{
+    chart->removeAllSeries();
+
+    const QList<QAbstractAxis*>& horizontalAxes = chart->axes(Qt::Horizontal);
+    for (QAbstractAxis* axis : horizontalAxes)
+        chart->removeAxis(axis);
+
+    const QList<QAbstractAxis*>& verticalAxes = chart->axes(Qt::Vertical);
+    for (QAbstractAxis* axis : verticalAxes)
+        chart->removeAxis(axis);
+
+    chart->setTitle("푼 문제 수 차트 생성을 위해 로그인이 필요합니다");
+
+    QBarSet* emptySet = new QBarSet("푼 문제 수");
+    for (int i = 0; i < 6; ++i){
+        *emptySet << 0;
+    }
+
+    QBarSeries* emptySeries = new QBarSeries();
+    emptySeries->append(emptySet);
+
+    QStringList categories = {"Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ruby"};
+    QBarCategoryAxis* axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+
+    QValueAxis* axisY = new QValueAxis();
+    axisY->setRange(0, 1);
+
+    chart->addSeries(emptySeries);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    emptySeries->attachAxis(axisX);
+    emptySeries->attachAxis(axisY);
+}

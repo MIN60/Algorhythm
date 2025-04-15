@@ -21,6 +21,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     networkManager = new NetworkManager(this);
     qDebug() << "user_chart:" << ui->user_chart;
     qDebug() << "[DEBUG] Algorhythm::networkManager is:" << networkManager;
+    ui->user_chart->clearChart();
 
 
     //applySectionStyle(ui->user_greeting);
@@ -42,11 +43,12 @@ Algorhythm::Algorhythm(QWidget *parent)
     connect(networkManager, &NetworkManager::onGraphDataReceived,
             ui->user_chart, &UserChart::drawChart);
 
-    networkManager->graphData("nlnf44");
+    //networkManager->graphData("nlnf44");
 
     // 임시 로그인
-    QString userAccount = "nlnf44";
-    networkManager->graphData(userAccount);
+    //QString userAccount = "nlnf44";
+    ui->user_greeting->setUserChart(ui->user_chart);
+    //networkManager->graphData(userAccount);
 
     qDebug() << "Algorhythm UI 설정 완료";
     qDebug() << "UserSearch 표시 상태:" << ui->user_search->isVisible();

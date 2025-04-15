@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include "usertiercard.h"
 #include "networkmanager.h"
+#include "userchart.h"
 
 class UserGreeting : public QWidget {
     Q_OBJECT
@@ -17,6 +18,8 @@ public:
     void setTier(const QString& tierName);
     bool isLoggedIn() const { return loggedIn; }
     QString getCurrentUsername() const { return currentUsername; }
+
+    void setUserChart(UserChart* chart);
 
 signals:
     void loginSuccess(const QString &username);
@@ -52,6 +55,11 @@ private:
     QPushButton* loginButton;
     QLabel* statusLabel;
     QPushButton* loginButtonMain;
+
+    // 차트
+    UserChart* userChart = nullptr;
+
+
 
 };
 #endif // USERGREETING_H

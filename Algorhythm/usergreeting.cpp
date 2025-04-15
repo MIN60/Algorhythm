@@ -165,10 +165,18 @@ void UserGreeting::processUserData(const QJsonObject &userData)
         // 버튼 텍스트 변경 (hide 대신)
         loginButtonMain->setText("로그아웃");
         loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px; background-color: #A1DEB2; color: white;");
+
+        //차트
+        if (userChart) {
+            userChart->setUsername(username);
+        }
+
     } else {
         // 로그인 실패
         statusLabel->setText("사용자를 찾을 수 없습니다.");
     }
+
+
 }
 
 void UserGreeting::handleMainButtonClick()
@@ -247,6 +255,13 @@ void UserGreeting::logoutUser()
     loginButtonMain->setText("로그인");
     loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px;");
 
+    // 차트 비우기
+    if (userChart) {
+        userChart->clearChart();
+    }
+
+
+
     // 로그아웃 완료 시그널 발생
     qDebug() << "로그아웃 완료 시그널 발생";
     //emit logoutComplete();
@@ -263,4 +278,10 @@ void UserGreeting::setTier(const QString& tierName)
 
     // 티어 이미지 업데이트
     updateTierImage(tierName);
+}
+
+
+void UserGreeting::setUserChart(UserChart* chart)
+{
+    this->userChart = chart;
 }
