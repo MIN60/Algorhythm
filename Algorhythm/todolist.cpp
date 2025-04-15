@@ -413,3 +413,89 @@ void TodoList::moveDate(const QDate& date, QCalendarWidget* calendar, QListWidge
 
 
 
+//ㅋ ㅐㄹ린더 꾸미기
+void TodoList::applyCalendarStyle(QCalendarWidget* calendar)
+{
+    if (!calendar) return;
+
+    calendar->setStyleSheet(R"(
+    QCalendarWidget {
+        background-color: #ffffff;
+        border: none;
+    }
+
+    QCalendarWidget QWidget#qt_calendar_navigationbar {
+        background-color: transparent;
+        margin-bottom: 10px;
+    }
+
+    QCalendarWidget QToolButton {
+        background-color: transparent;
+        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+    }
+
+    QCalendarWidget QToolButton::menu-indicator {
+        image: none;
+    }
+
+    QCalendarWidget QToolButton:hover {
+        color: #4CAF50;
+    }
+
+    QCalendarWidget QTableView QHeaderView::section {
+        background-color: transparent;
+        color: #888888;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        padding-bottom: 5px;
+    }
+
+    QCalendarWidget QAbstractItemView:enabled {
+        color: #2B2B2B;
+        font-size: 14px;
+        selection-background-color: #4CAF50;
+        selection-color: #ffffff;
+        gridline-color: #eeeeee;
+    }
+
+    QCalendarWidget QAbstractItemView::item:selected {
+        background-color: #116329;
+        color: white;
+        border-radius: 5px;
+    }
+
+
+    )");
+}
+
+
+void TodoList::applyButtonStyle(QPushButton* button)
+{
+    if (!button) return;
+
+    button->setMinimumSize(100, 30);
+
+    button->setStyleSheet(R"(
+        QPushButton {
+            background-color: #4AC26B;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        QPushButton:hover {
+            background-color: #3FA75C;
+        }
+
+        QPushButton:pressed {
+            background-color: #368E50;
+        }
+    )");
+}
+
+

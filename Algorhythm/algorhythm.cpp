@@ -24,12 +24,14 @@ Algorhythm::Algorhythm(QWidget *parent)
 
 
     //todolist ui연결
+    todo.applyButtonStyle(ui->pushButtonAdd);
     connect(ui->pushButtonAdd, &QPushButton::clicked, this, [=]() {
         todo.handleAddTask(ui->listWidgetTasks, ui->lineEditTask, ui->today_tag);
     });
 
 
     // 저장
+    todo.applyButtonStyle(ui->pushButtonSave);
     connect(ui->pushButtonSave, &QPushButton::clicked, this, [=]() {
         todo.handleSave(ui->listWidgetTasks, ui->today_tag, ui->calendarWidget->selectedDate());
     });
@@ -62,8 +64,12 @@ Algorhythm::Algorhythm(QWidget *parent)
         todo.handleChangeDate(ui->calendarWidget, ui->listWidgetTasks, ui->today_tag);
     });
 
+    ui->calendarWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    todo.applyCalendarStyle(ui->calendarWidget);
+
 
 }
+
 
 Algorhythm::~Algorhythm()
 {

@@ -5,6 +5,7 @@
 #include<QString>
 #include<QLabel>
 #include <QCalendarWidget>
+#include <QPushButton>
 
 class TodoList
 {
@@ -31,9 +32,8 @@ public:
     void handleAddTask(QListWidget* listWidget, QLineEdit* taskEdit, QLineEdit* tagEdit);
     void handleSave(QListWidget* listWidget, QLineEdit* tagEdit, const QDate& selectedDate);
 
-
-
-
+    void applyCalendarStyle(QCalendarWidget* calendar); // 캘꾸
+    void applyButtonStyle(QPushButton* button);
 
 
 private:
