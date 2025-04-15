@@ -3,24 +3,25 @@
 UserGreeting::UserGreeting(QWidget* parent)
     : QWidget(parent)
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QHBoxLayout* layout = new QHBoxLayout(this);
 
+    QVBoxLayout* greetingLayout = new QVBoxLayout;
     greetingLabel = new QLabel("안녕하세요,", this);
     greetingLabel->setStyleSheet("font-size: 20pt;");
-
     nameLabel = new QLabel("김땡땡님!", this);
     nameLabel->setStyleSheet("font-size: 30pt; font-weight: bold; color: #2E7D32;");
 
-    tierCard = new UserTierCard(this);  // 💡 생성
-    tierCard->setTier("Gold I", 1234);  // 초기 더미값
+    greetingLayout->addWidget(greetingLabel);
+    greetingLayout->addWidget(nameLabel);
+    greetingLayout->addStretch();
 
-    layout->addWidget(greetingLabel);
-    layout->addWidget(nameLabel);
-    layout->addWidget(tierCard);
+    tierCard = new UserTierCard(this);
+    tierCard->setTier("Gold I", 1234);
 
-    layout->setSpacing(10);
+    layout->addLayout(greetingLayout); // 왼쪽 인사
+    layout->addWidget(tierCard);  // 오른쪽 티어
+    layout->setSpacing(40);
     layout->setContentsMargins(15, 15, 15, 15);
-    setLayout(layout);
 }
 
 void UserGreeting::setUserName(const QString& name)
