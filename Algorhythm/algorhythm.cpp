@@ -15,6 +15,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     , ui(new Ui::Algorhythm)
 {
     ui->setupUi(this);
+    this->setStyleSheet("background-color: #F9FAFB;");
 
     // 시작 시 기존 todo있으면 불러오기
     QDate today = ui->calendarWidget->selectedDate();
