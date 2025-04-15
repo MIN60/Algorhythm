@@ -35,13 +35,28 @@ void UserSearch::setupUI()
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
     QLabel* titleLabel = new QLabel("문제 검색하기", this);
-    titleLabel->setStyleSheet("font-weight: bold; font-size: 14pt;");
+    titleLabel->setStyleSheet("font-weight: bold; font-size: 16pt;");
 
     searchInput = new QLineEdit(this);
     searchInput->setPlaceholderText("문제 번호를 입력하세요");
+    searchInput->setStyleSheet("font-size: 14pt; padding: 6px;");
 
     QPushButton* searchButton = new QPushButton("검색", this);
-    searchButton->setFixedWidth(60);
+    searchButton->setFixedHeight(40);
+    searchButton->setStyleSheet(R"(
+        QPushButton {
+            font-size: 14pt;
+            background-color: #4AC26B;
+            color: white;
+            border: none;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+        QPushButton:hover {
+            background-color: #3bb25a;
+        }
+    )");
 
     QHBoxLayout* inputLayout = new QHBoxLayout;
     inputLayout->addWidget(searchInput);
@@ -49,6 +64,7 @@ void UserSearch::setupUI()
 
     resultList = new QListWidget(this);
     resultList->setAlternatingRowColors(true);
+    resultList->setStyleSheet("font-size: 14pt;");
 
     statusLabel = new QLabel(this);
     statusLabel->setStyleSheet("color: gray; font-style: italic;");
@@ -183,8 +199,26 @@ void UserSearch::handleNetworkError(const QString &errorMsg)
 
 void UserSearch::addProblemToList(const Problem& p)
 {
-    QListWidgetItem* item = new QListWidgetItem(
-        QString("%1 - %2 [%3]").arg(p.id, p.title, p.problemtier));
-    item->setData(Qt::UserRole, p.id);
+    QWidget* itemWidget = new QWidget();
+    QHBoxLayout* layout = new QHBoxLayout(itemWidget);
+    layout->setContentsMargins(10, 4, 10, 4);
+
+    //왼: 문제 번호, 제목
+    QLabel* titleLabel = new QLabel(QString("%1 - %2").arg(p.id, p.title));
+    titleLabel->setStyleSheet("font-size: 14pt;");
+    layout->addWidget(titleLabel);
+
+    // 오른쪽 티어
+    QLabel* tierLabel = new QLabel(p.problemtier);
+    tierLabel->setStyleSheet("font-size: 14pt; color: gray;");
+    layout->addStretch();  // 가운데 빈 공간 밀어냄
+    layout->addWidget(tierLabel);
+
+    QListWidgetItem* item = new QListWidgetItem(resultList);
+    item->setSizeHint(itemWidget->sizeHint());
     resultList->addItem(item);
+    resultList->setItemWidget(item, itemWidget);
+
+    item->setData(Qt::UserRole, p.id);
 }
+

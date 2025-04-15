@@ -32,6 +32,7 @@ UserGreeting::UserGreeting(QWidget* parent)
             padding: 8px 16px;
             background-color: #4AC26B;
             color: white;
+            font-weight: bold;
             border: none;
             border-radius: 6px;
         }
