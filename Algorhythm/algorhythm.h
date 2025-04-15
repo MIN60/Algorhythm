@@ -1,6 +1,6 @@
 #ifndef ALGORHYTHM_H
 #define ALGORHYTHM_H
-
+#include "networkmanager.h"
 #include <QMainWindow>
 #include "networkmanager.h"
 
@@ -26,5 +26,6 @@ private:
     Ui::Algorhythm *ui;
     NetworkManager* networkManager;
     QTimer* timeTimer;
+    void setupWidgets();
 };
 #endif // ALGORHYTHM_H
