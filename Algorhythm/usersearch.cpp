@@ -220,5 +220,6 @@ void UserSearch::addProblemToList(const Problem& p)
     resultList->setItemWidget(item, itemWidget);
 
     item->setData(Qt::UserRole, p.id);
+    item->setToolTip("더블클릭 시 해당 문제의 페이지로 이동합니다.");
 }
 
