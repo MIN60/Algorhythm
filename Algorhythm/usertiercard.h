@@ -15,6 +15,8 @@ public:
     explicit UserTierCard(QWidget* parent = nullptr);
     void setTier(const QString& tierName);
     void setTierImage(const QString& imagePath);
+    void applyCardStyle();
+
 
 private:
     void initializeTierImages();

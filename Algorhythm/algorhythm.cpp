@@ -23,13 +23,6 @@ Algorhythm::Algorhythm(QWidget *parent)
     qDebug() << "[DEBUG] Algorhythm::networkManager is:" << networkManager;
     ui->user_chart->clearChart();
 
-
-    //applySectionStyle(ui->user_greeting);
-    //applySectionStyle(ui->user_chart);
-    //applySectionStyle(ui->user_search);
-    //applySectionStyle(ui->user_recommend);
-
-
     //GREET 더미
     // 네트워크 매니저 생성 및 설정
     networkManager = new NetworkManager(this);
