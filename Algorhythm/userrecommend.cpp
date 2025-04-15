@@ -181,8 +181,6 @@ void UserRecommend::handleNetworkError(const QString &errorMsg)
 {
     qDebug() << "UserRecommend::handleNetworkError 호출됨:" << errorMsg;
 
-    statusLabel->setText("오류: " + errorMsg);
-
     if (errorMsg == "NOT_FOUND") {
         statusLabel->setText("사용자를 찾을 수 없습니다.");
     }
