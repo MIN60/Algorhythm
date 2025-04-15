@@ -8,7 +8,7 @@ UserGreeting::UserGreeting(QWidget* parent)
     QVBoxLayout* greetingLayout = new QVBoxLayout;
     greetingLabel = new QLabel("안녕하세요,", this);
     greetingLabel->setStyleSheet("font-size: 20pt;");
-    nameLabel = new QLabel("로그인이 필요합니다.", this);
+    nameLabel = new QLabel("로그인이 필요합니다!", this);
     nameLabel->setStyleSheet("font-size: 30pt; font-weight: bold; color: #2E7D32;");
 
     greetingLayout->addWidget(greetingLabel);
