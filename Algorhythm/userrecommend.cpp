@@ -9,8 +9,8 @@ UserRecommend::UserRecommend(QWidget* parent)
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
 
-    titleLabel = new QLabel("오늘의 알고리듬 복습", this);
-    titleLabel->setStyleSheet("font-weight: bold; font-size: 14pt;");
+    titleLabel = new QLabel("오늘의 알고리즘 복습", this);
+    titleLabel->setStyleSheet("font-weight: bold; font-size: 16pt;");
 
     listWidget = new QListWidget(this);
     listWidget->setAlternatingRowColors(true);
@@ -193,14 +193,26 @@ void UserRecommend::setRecommend(const QList<RecommendProblem>& list)
     listWidget->clear();
 
     for (const auto& p : list) {
-        // 티어 정보 없이 제목만 표시
-        //QString displayText = p.title;
-        QString displayText = QString("%1 [%2]").arg(p.title, p.tier);
-        QListWidgetItem* item = new QListWidgetItem(displayText);
+        QWidget* itemWidget = new QWidget();
+        QHBoxLayout* layout = new QHBoxLayout(itemWidget);
+        layout->setContentsMargins(16, 8, 16, 8);
 
-        //QListWidgetItem* item = new QListWidgetItem(displayText);
-        item->setData(Qt::UserRole, p.id);  // 문제 번호
+        // 제목
+        QLabel* titleLabel = new QLabel(p.title);
+        titleLabel->setStyleSheet("font-size: 12pt;");
+        layout->addWidget(titleLabel);
+
+        // 티어
+        QLabel* tierLabel = new QLabel(p.tier);
+        tierLabel->setStyleSheet("font-size: 12pt; color: gray;");
+        layout->addStretch();
+        layout->addWidget(tierLabel);
+
+        QListWidgetItem* item = new QListWidgetItem(listWidget);
+        item->setSizeHint(itemWidget->sizeHint());
+        item->setData(Qt::UserRole, p.id);
         listWidget->addItem(item);
+        listWidget->setItemWidget(item, itemWidget);
 
         qDebug() << "리스트에 추가:" << p.id << p.title;
     }
