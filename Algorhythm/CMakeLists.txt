@@ -10,7 +10,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network NetworkAuth)
+find_package(Qt6 REQUIRED COMPONENTS Charts)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -23,6 +25,19 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Algorhythm
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        usergreeting.h
+        usergreeting.cpp
+
+        usertiercard.cpp
+        usertiercard.h
+        userchart.cpp
+        userchart.h
+        usersearch.h
+        usersearch.cpp
+        userrecommend.h
+        userrecommend.cpp
+        networkmanager.h
+        networkmanager.cpp
         todolist.h
         todolist.cpp
     )
@@ -45,6 +60,8 @@ else()
 endif()
 
 target_link_libraries(Algorhythm PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Algorhythm PRIVATE Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::NetworkAuth)
+target_link_libraries(Algorhythm PRIVATE Qt${QT_VERSION_MAJOR}::Charts)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

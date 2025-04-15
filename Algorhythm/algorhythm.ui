@@ -84,7 +84,7 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="USER">
        <attribute name="title">
@@ -92,16 +92,16 @@
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
-         <widget class="QWidget" name="user_greeting" native="true"/>
+         <widget class="UserGreeting" name="user_greeting" native="true"/>
         </item>
         <item row="0" column="1">
-         <widget class="QWidget" name="user_search" native="true"/>
+         <widget class="UserSearch" name="user_search" native="true"/>
         </item>
         <item row="1" column="0">
-         <widget class="QWidget" name="user_chart" native="true"/>
+         <widget class="UserChart" name="user_chart" native="true"/>
         </item>
         <item row="1" column="1">
-         <widget class="QWidget" name="user_recommend" native="true"/>
+         <widget class="UserRecommend" name="user_recommend" native="true"/>
         </item>
        </layout>
       </widget>
@@ -342,6 +342,32 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>UserGreeting</class>
+   <extends>QWidget</extends>
+   <header>usergreeting.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserChart</class>
+   <extends>QWidget</extends>
+   <header>userchart.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserSearch</class>
+   <extends>QWidget</extends>
+   <header>usersearch.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserRecommend</class>
+   <extends>QWidget</extends>
+   <header>userrecommend.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
