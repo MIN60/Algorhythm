@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1108</width>
-    <height>814</height>
+    <height>823</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_2">
         <property name="font">
@@ -31,10 +34,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="timeLabel">
         <property name="font">
          <font>
-          <pointsize>15</pointsize>
+          <family>Noto Sans KR</family>
+          <pointsize>18</pointsize>
          </font>
         </property>
         <property name="text">
@@ -62,6 +66,18 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <pointsize>15</pointsize>
@@ -127,7 +143,7 @@
                 <property name="font">
                  <font>
                   <family>Noto Sans KR</family>
-                  <pointsize>10</pointsize>
+                  <pointsize>14</pointsize>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -137,10 +153,29 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="tag_input"/>
+               <widget class="QLineEdit" name="tag_input">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans KR</family>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QListWidget" name="tag_search_result">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans KR</family>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
                 <property name="alternatingRowColors">
                  <bool>true</bool>
                 </property>
@@ -177,7 +212,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_today_tag">
+              <widget class="QLineEdit" name="today_tag">
                <property name="font">
                 <font>
                  <pointsize>14</pointsize>
@@ -185,18 +220,6 @@
                </property>
                <property name="placeholderText">
                 <string>태그 입력</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButtonAddTag">
-               <property name="font">
-                <font>
-                 <pointsize>11</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>✓</string>
                </property>
               </widget>
              </item>
@@ -209,6 +232,24 @@
             <layout class="QHBoxLayout" name="inputLayout">
              <item>
               <widget class="QLineEdit" name="lineEditTask">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
                <property name="placeholderText">
                 <string>할 일 입력</string>
                </property>
@@ -216,6 +257,21 @@
              </item>
              <item>
               <widget class="QPushButton" name="pushButtonAdd">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>18</pointsize>
+                </font>
+               </property>
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
                <property name="text">
                 <string>+</string>
                </property>
@@ -224,17 +280,46 @@
             </layout>
            </item>
            <item>
-            <widget class="QListWidget" name="listWidgetTasks"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButtonExit">
-             <property name="styleSheet">
-              <string notr="true">font-size: 14pt; font-weight: bold;</string>
-             </property>
-             <property name="text">
-              <string>저장하기</string>
+            <widget class="QListWidget" name="listWidgetTasks">
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>15</pointsize>
+              </font>
              </property>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="bottomButtonLayout">
+             <item>
+              <widget class="QPushButton" name="pushButtonSave">
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>15</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>저장하기</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonClear">
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>15</pointsize>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>삭제하기</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

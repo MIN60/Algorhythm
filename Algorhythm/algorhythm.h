@@ -17,9 +17,14 @@ class Algorhythm : public QMainWindow
 public:
     Algorhythm(QWidget *parent = nullptr);
     ~Algorhythm();
+    void applyTabStyle(QTabWidget* tabWidget);
+
+private slots:
+    void updateTimeLabel();
 
 private:
     Ui::Algorhythm *ui;
     NetworkManager* networkManager;
+    QTimer* timeTimer;
 };
 #endif // ALGORHYTHM_H
