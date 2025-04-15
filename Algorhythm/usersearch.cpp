@@ -34,7 +34,7 @@ void UserSearch::setupConnections()
 void UserSearch::setupUI()
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
-    QLabel* titleLabel = new QLabel("문제 검색하기", this);
+    QLabel* titleLabel = new QLabel("문제 검색", this);
     titleLabel->setStyleSheet("font-weight: bold; font-size: 16pt;");
 
     searchInput = new QLineEdit(this);
