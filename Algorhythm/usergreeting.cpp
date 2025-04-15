@@ -17,6 +17,7 @@ UserGreeting::UserGreeting(QWidget* parent)
 
     tierCard = new UserTierCard(this);
     tierCard->setTier("Gold I", 1234);
+    tierCard->setMaximumWidth(250);
 
     layout->addLayout(greetingLayout); // 왼쪽 인사
     layout->addWidget(tierCard);  // 오른쪽 티어
