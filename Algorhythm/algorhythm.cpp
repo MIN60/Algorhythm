@@ -12,7 +12,6 @@
 TodoList todo;
 
 
-
 Algorhythm::Algorhythm(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Algorhythm)

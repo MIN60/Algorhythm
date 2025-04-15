@@ -29,6 +29,7 @@ UserChart::UserChart(QWidget* parent)
     setLayout(layout);
 }
 
+
 void UserChart::drawChart(const QJsonObject& graphData)
 {
     if (!graphData.contains("level") || !graphData["level"].isObject())
@@ -56,14 +57,27 @@ void UserChart::drawChart(const QJsonObject& graphData)
             tierCounts[5] += count;
     }
 
-    // 그래프 초기화 및 그리기
     chart->removeAllSeries();
-    chart->removeAxis(chart->axisX());
-    chart->removeAxis(chart->axisY());
+
+    const QList<QAbstractAxis*>& horizontalAxes = chart->axes(Qt::Horizontal);
+    for (QAbstractAxis* axis : horizontalAxes) {
+        chart->removeAxis(axis);
+    }
+
+    const QList<QAbstractAxis*>& verticalAxes = chart->axes(Qt::Vertical);
+    for (QAbstractAxis* axis : verticalAxes) {
+        chart->removeAxis(axis);
+    }
+
 
     QBarSet* set = new QBarSet("푼 문제 수");
-    for (int count : tierCounts)
+    for (const int& count : tierCounts) {
         *set << count;
+    }
+
+    set->setColor(QColor("#4AC26B"));
+    set->setBrush(QColor("#4AC26B"));
+
 
 
     QBarSeries* series = new QBarSeries();
@@ -93,3 +107,4 @@ void UserChart::drawChart(const QJsonObject& graphData)
     series->attachAxis(axisX);
     series->attachAxis(axisY);
 }
+
