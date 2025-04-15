@@ -3,11 +3,14 @@
 #include <QJsonDocument>
 #include <QSslConfiguration>
 #include <QDebug>
+#include <QJsonArray>
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
     manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished, this, &NetworkManager::handleNetworkReply);
+    qDebug() << "[DEBUG] manager is:" << manager;
+
 }
 
 NetworkManager::~NetworkManager() = default;
@@ -46,7 +49,7 @@ void NetworkManager::problemData(const QString &problemId)
 
 void NetworkManager::graphData(const QString &handle)
 {
-    QUrl url("https://solved.ac/api/v3/user/contribution_stats");
+    QUrl url("https://solved.ac/api/v3/user/problem_stats");
     QUrlQuery query;
     query.addQueryItem("handle", handle);
     url.setQuery(query);
@@ -55,6 +58,7 @@ void NetworkManager::graphData(const QString &handle)
     setupRequest(request);
     manager->get(request);
 }
+
 
 void NetworkManager::recommendData(const QString &handle)
 {
@@ -80,24 +84,42 @@ void NetworkManager::handleNetworkReply(QNetworkReply *reply)
     QByteArray data = reply->readAll();
     QJsonDocument doc = QJsonDocument::fromJson(data);
 
-    if (!doc.isObject()) {
-        emit onNetworkError("Invalid JSON format");
-        reply->deleteLater();
-        return;
-    }
-
-    QJsonObject obj = doc.object();
     QString path = reply->request().url().path();
 
-    if (path.contains("user/show")) {
-        emit onUserDataReceived(obj);
-    } else if (path.contains("problem/show")) {
-        emit onProblemDataReceived(obj);
-    } else if (path.contains("contribution_stats")) {
-        emit onGraphDataReceived(obj);
-    } else if (path.contains("top_100")) {
-        emit onRandomProblemsReceived(obj);
+    if (doc.isArray()) {
+        QJsonArray arr = doc.array();
+        if (!arr.isEmpty() && arr[0].isObject()) {
+
+            QJsonObject levelMap;
+            for (const auto& val : arr) {
+                QJsonObject obj = val.toObject();
+                int level = obj["level"].toInt();
+                int solved = obj["solved"].toInt();
+                levelMap.insert(QString::number(level), solved);
+            }
+
+            QJsonObject final;
+            final.insert("level", levelMap);
+
+            QString path = reply->request().url().path();
+            if (path.contains("problem_stats")) {
+                emit onGraphDataReceived(final);
+            }
+        }
+    }
+    else if (doc.isObject()) {
+        QJsonObject obj = doc.object();
+
+        if (path.contains("user/show")) {
+            emit onUserDataReceived(obj);
+            //emit onGraphDataReceived(obj);
+        } else if (path.contains("problem/show")) {
+            emit onProblemDataReceived(obj);
+        } else if (path.contains("top_100")) {
+            emit onRandomProblemsReceived(obj);
+        }
     }
 
     reply->deleteLater();
 }
+

@@ -2,6 +2,7 @@
 #define ALGORHYTHM_H
 
 #include <QMainWindow>
+#include "networkmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +20,6 @@ public:
 
 private:
     Ui::Algorhythm *ui;
+    NetworkManager* networkManager;
 };
 #endif // ALGORHYTHM_H

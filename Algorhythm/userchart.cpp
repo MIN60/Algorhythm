@@ -14,37 +14,68 @@ UserChart::UserChart(QWidget* parent)
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
 
-    QBarSet* set = new QBarSet("푼 문제 수");
-    *set << 10 << 20 << 15 << 5 << 1 << 3;
-
-    QBarSeries* series = new QBarSeries();
-    series->append(set);
-
-    // 티어
-    QStringList categories;
-    categories << "Bronze" << "Silver" << "Gold" << "Platinum" << "Diamond" << "Ruby";
-    QBarCategoryAxis* axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-
-    // 값
-    QValueAxis* axisY = new QValueAxis();
-    axisY->setTitleText("문제 수");
-    axisY->setRange(0, 25);  // 최대 푼 문제 수
-
-    QChart* chart = new QChart();
-    chart->addSeries(series);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    chart->legend()->setVisible(false);  // 굳이 필요 없을 경우
-    chart->setTitle("티어별 푼 문제 수");
+    chart = new QChart();
+    chart->setTitle("Tier");
     chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->legend()->setVisible(false);
 
-    series->attachAxis(axisX);
-    series->attachAxis(axisY);
-
-    QChartView* chartView = new QChartView(chart);
+    chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     layout->addWidget(chartView);
     setLayout(layout);
+}
+
+void UserChart::drawChart(const QJsonObject& graphData)
+{
+    if (!graphData.contains("level") || !graphData["level"].isObject())
+        return;
+
+    QJsonObject levelObj = graphData["level"].toObject();
+
+    QVector<int> tierCounts(6, 0);  // Bronze ~ Ruby
+
+    for (const QString& key : levelObj.keys()) {
+        int level = key.toInt();
+        int count = levelObj.value(key).toInt();
+
+        if (level >= 1 && level <= 5)
+            tierCounts[0] += count;
+        else if (level <= 10)
+            tierCounts[1] += count;
+        else if (level <= 15)
+            tierCounts[2] += count;
+        else if (level <= 20)
+            tierCounts[3] += count;
+        else if (level <= 25)
+            tierCounts[4] += count;
+        else if (level <= 30)
+            tierCounts[5] += count;
+    }
+
+    // 그래프 초기화 및 그리기
+    chart->removeAllSeries();
+    chart->removeAxis(chart->axisX());
+    chart->removeAxis(chart->axisY());
+
+    QBarSet* set = new QBarSet("푼 문제 수");
+    for (int count : tierCounts)
+        *set << count;
+
+    QBarSeries* series = new QBarSeries();
+    series->append(set);
+
+    QStringList categories = {"Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ruby"};
+    QBarCategoryAxis* axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+
+    QValueAxis* axisY = new QValueAxis();
+    axisY->setLabelFormat("%d");
+    axisY->setRange(0, *std::max_element(tierCounts.begin(), tierCounts.end()) + 5);
+
+    chart->addSeries(series);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisX);
+    series->attachAxis(axisY);
 }
