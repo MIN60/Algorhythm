@@ -11,7 +11,7 @@ UserGreeting::UserGreeting(QWidget* parent)
     // 클릭 가능한 영역 생성
     clickableArea = new QWidget(this);
     clickableArea->setCursor(Qt::PointingHandCursor);
-    clickableArea->setToolTip("클릭하여 로그인하세요");
+    clickableArea->setToolTip("클릭하여 로그인/로그아웃하세요");
     clickableArea->installEventFilter(this);
 
     // clickableArea에 대한 레이아웃 생성
@@ -26,14 +26,32 @@ UserGreeting::UserGreeting(QWidget* parent)
     // 로그인 버튼 생성 (위치 변경)
     loginButtonMain = new QPushButton("로그인", clickableArea);
     loginButtonMain->setFixedWidth(120); // 버튼 크기 조정
-    loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px;");
-
+    loginButtonMain->setStyleSheet(R"(
+        QPushButton {
+            font-size: 12pt;
+            padding: 8px 16px;
+            background-color: #4AC26B;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        QPushButton:hover {
+            background-color: #3bb25a;
+        }
+    )");
     // clickableArea의 레이아웃에 라벨 추가
     clickableLayout->addWidget(greetingLabel);
     clickableLayout->addWidget(nameLabel);
-    clickableLayout->addWidget(loginButtonMain); // 버튼 위치 변경
+    clickableLayout->addSpacing(12);
+    //
+    QHBoxLayout* buttonWrapper = new QHBoxLayout();
+    buttonWrapper->addWidget(loginButtonMain, 0, Qt::AlignLeft);
+    buttonWrapper->setContentsMargins(0, 0, 0, 0);
+
+    clickableLayout->addLayout(buttonWrapper);
     clickableLayout->addStretch();
-    clickableLayout->setContentsMargins(10, 10, 10, 10);
+
+
 
     tierCard = new UserTierCard(this);
     tierCard->setTier("");
@@ -154,7 +172,6 @@ void UserGreeting::processUserData(const QJsonObject &userData)
 
         // 버튼 텍스트 변경 (hide 대신)
         loginButtonMain->setText("로그아웃");
-        loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px; background-color: #A1DEB2; color: white;");
 
         //차트
         if (userChart) {
@@ -244,7 +261,7 @@ void UserGreeting::logoutUser()
 
     // 버튼 상태 되돌리기 (show 대신)
     loginButtonMain->setText("로그인");
-    loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px;");
+    //loginButtonMain->setStyleSheet("font-size: 12pt; padding: 5px;");
 
     // 차트 비우기
     if (userChart) {
