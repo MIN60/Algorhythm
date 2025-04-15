@@ -211,6 +211,8 @@ void UserRecommend::setRecommend(const QList<RecommendProblem>& list)
         QListWidgetItem* item = new QListWidgetItem(listWidget);
         item->setSizeHint(itemWidget->sizeHint());
         item->setData(Qt::UserRole, p.id);
+        item->setToolTip("더블클릭 시 문제 페이지로 이동합니다.");
+
         listWidget->addItem(item);
         listWidget->setItemWidget(item, itemWidget);
 
