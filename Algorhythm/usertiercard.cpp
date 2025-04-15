@@ -35,8 +35,8 @@ UserTierCard::UserTierCard(QWidget* parent)
 
     // 티어 이미지 라벨
     tierImageLabel = new QLabel(cardFrame);
-    tierImageLabel->setFixedSize(150, 150);
-    tierImageLabel->setScaledContents(true);
+    tierImageLabel->setFixedSize(150, 170);
+    //tierImageLabel->setScaledContents(true);
     tierImageLabel->setAlignment(Qt::AlignCenter);
     cardLayout->addWidget(tierImageLabel, 0, Qt::AlignCenter);
 
@@ -83,8 +83,10 @@ void UserTierCard::setTierImage(const QString& imagePath)
     qDebug() << "이미지 로드 성공 여부: " << !pixmap.isNull();
 
     if (!pixmap.isNull()) {
-        tierImageLabel->setPixmap(pixmap.scaled(150, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        tierImageLabel->setStyleSheet("");  // 스타일시트 초기화
+        QPixmap scaled = pixmap.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        tierImageLabel->setPixmap(scaled);
+        tierImageLabel->setAlignment(Qt::AlignCenter);
+        tierImageLabel->setFixedSize(100, 170);
     } else {
         // 이미지를 찾을 수 없는 경우 텍스트 표시
         tierImageLabel->setText("No Image");

@@ -95,16 +95,6 @@ void UserGreeting::updateTierImage(const QString& tierName)
     }
 }
 
-    // 이미지 로드 및 설정
-    QPixmap tierImage(imagePath);
-    if (tierImage.isNull()) {
-        // 이미지가 없을 경우 대체 표시
-        //tierImageLabel->setText(tierName);
-        //tierImageLabel->setStyleSheet("background-color: #FFD700; color: white; font-size: 18pt; font-weight: bold;");
-    } else {
-        //tierImageLabel->setPixmap(tierImage.scaled(100, 100, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-        //tierImageLabel->setStyleSheet("");
-    }
 }
 
 bool UserGreeting::eventFilter(QObject *watched, QEvent *event)

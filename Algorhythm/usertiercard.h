@@ -32,6 +32,8 @@ private:
 
     QMap<QString, TierImagePaths> tierImages;
     QString alternativeResourcePrefix;  // 대체 리소스 경로
+
+
 };
 
 #endif // USERTIERCARD_H
