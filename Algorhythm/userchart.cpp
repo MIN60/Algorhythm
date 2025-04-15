@@ -8,6 +8,9 @@
 #include <QtCharts/QLegend>
 #include <QVBoxLayout>
 #include <QPainter>
+#include <QToolTip>
+
+#include <QMouseEvent>
 
 UserChart::UserChart(QWidget* parent)
     : QWidget(parent)
@@ -62,12 +65,23 @@ void UserChart::drawChart(const QJsonObject& graphData)
     for (int count : tierCounts)
         *set << count;
 
+
     QBarSeries* series = new QBarSeries();
     series->append(set);
 
     QStringList categories = {"Bronze", "Silver", "Gold", "Platinum", "Diamond", "Ruby"};
     QBarCategoryAxis* axisX = new QBarCategoryAxis();
     axisX->append(categories);
+
+    connect(set, &QBarSet::hovered, this, [=](bool status, int index) {
+        if (status) {
+            QString text = QString("%1: %2문제").arg(categories[index]).arg(tierCounts[index]);
+            QToolTip::showText(QCursor::pos(), text, this);
+        } else {
+            QToolTip::hideText();
+        }
+    });
+
 
     QValueAxis* axisY = new QValueAxis();
     axisY->setLabelFormat("%d");
