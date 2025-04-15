@@ -76,7 +76,6 @@ void UserRecommend::loadRecommendations(const QString& handle)
         return;
     }
 
-    statusLabel->setText("추천 문제를 가져오는 중...");
     listWidget->clear();
 
     // NetworkManager를 통해 추천 문제 요청
@@ -197,8 +196,11 @@ void UserRecommend::setRecommend(const QList<RecommendProblem>& list)
 
     for (const auto& p : list) {
         // 티어 정보 없이 제목만 표시
-        QString displayText = p.title;
+        //QString displayText = p.title;
+        QString displayText = QString("%1 [%2]").arg(p.title, p.tier);
         QListWidgetItem* item = new QListWidgetItem(displayText);
+
+        //QListWidgetItem* item = new QListWidgetItem(displayText);
         item->setData(Qt::UserRole, p.id);  // 문제 번호
         listWidget->addItem(item);
 

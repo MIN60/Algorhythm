@@ -9,7 +9,7 @@
 struct RecommendProblem {
     QString id; //문제 번호
     QString title; //문제 제목
-    QString re_problemtier; //난이도
+    QString tier;; //난이도
 };
 
 class UserRecommend : public QWidget
