@@ -79,7 +79,7 @@
          <widget class="UserGreeting" name="user_greeting" native="true"/>
         </item>
         <item row="0" column="1">
-         <widget class="QWidget" name="user_search" native="true"/>
+         <widget class="UserSearch" name="user_search" native="true"/>
         </item>
         <item row="1" column="0">
          <widget class="UserChart" name="user_chart" native="true"/>
@@ -268,6 +268,12 @@
    <class>UserChart</class>
    <extends>QWidget</extends>
    <header>userchart.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UserSearch</class>
+   <extends>QWidget</extends>
+   <header>usersearch.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

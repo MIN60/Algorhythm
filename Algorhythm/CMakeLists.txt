@@ -32,6 +32,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         usertiercard.h
         userchart.cpp
         userchart.h
+        usersearch.h
+        usersearch.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Algorhythm APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
