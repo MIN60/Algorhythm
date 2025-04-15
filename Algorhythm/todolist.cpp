@@ -499,3 +499,21 @@ void TodoList::applyButtonStyle(QPushButton* button)
 }
 
 
+void TodoList::applySectionStyle(QWidget* section)
+{
+    if (!section) return;
+
+    section->setStyleSheet(QString(R"(
+        #%1 {
+            background: #F9FAFB;
+            border: 1px solid #E5F0F8;
+            border-radius: 12px;
+        }
+    )").arg(section->objectName()));
+
+    if (section->layout()) {
+        section->layout()->setContentsMargins(20, 20, 20, 20);
+    }
+}
+
+

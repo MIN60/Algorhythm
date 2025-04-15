@@ -22,6 +22,10 @@ Algorhythm::Algorhythm(QWidget *parent)
 
     this->setStyleSheet("background-color: #F9FAFB;");
 
+    todo.applySectionStyle(ui->calender_item);
+    //todo.applySectionStyle(ui->search_tag);
+    todo.applySectionStyle(ui->todo_item);
+
 
     ui->lineEditTask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     ui->lineEditTask->setMinimumHeight(50);

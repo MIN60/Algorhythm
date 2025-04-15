@@ -34,6 +34,7 @@ public:
 
     void applyCalendarStyle(QCalendarWidget* calendar); // 캘꾸
     void applyButtonStyle(QPushButton* button);
+    void applySectionStyle(QWidget* section);
 
 
 private:
