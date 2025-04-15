@@ -18,9 +18,16 @@ Algorhythm::Algorhythm(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     networkManager = new NetworkManager(this);
     qDebug() << "user_chart:" << ui->user_chart;
     qDebug() << "[DEBUG] Algorhythm::networkManager is:" << networkManager;
+
+
+    //applySectionStyle(ui->user_greeting);
+    //applySectionStyle(ui->user_chart);
+    //applySectionStyle(ui->user_search);
+    //applySectionStyle(ui->user_recommend);
 
 
     //GREET 더미
