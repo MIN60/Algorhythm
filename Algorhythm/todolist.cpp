@@ -138,81 +138,95 @@ void TodoList::clearTasks(QListWidget* listWidget, QLineEdit* tagEdit, const QDa
 
 
 void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QLineEdit* tagEdit){
-    QFile file(filepath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        listWidget->clear();
-        tagEdit->clear();
 
-        QDate fileDate = QDate::fromString(QFileInfo(filepath).completeBaseName(), "yyyy-MM-dd");
+    try{
+        QFile file(filepath);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            listWidget->clear();
+            tagEdit->clear();
 
-        if (fileDate != QDate::currentDate() && !isModified) {
-            QMessageBox::warning(nullptr, "새로운 TODO", "작성된 TODO가 없습니다.");
+            QDate fileDate = QDate::fromString(QFileInfo(filepath).completeBaseName(), "yyyy-MM-dd");
+
+            if (fileDate != QDate::currentDate() && !isModified) {
+                QMessageBox::warning(nullptr, "새로운 TODO", "작성된 TODO가 없습니다.");
+            }
+
+            return;
         }
 
-        return;
-    }
 
+        QByteArray data = file.readAll();
+        file.close();
 
-    QByteArray data = file.readAll();
-    file.close();
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (doc.isNull()) {
+            QMessageBox::warning(nullptr, "파싱 실패", "JSON 파싱에 실패했습니다.");
+            return;
+        }
 
-    QJsonParseError err;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    if (doc.isNull()) {
-        QMessageBox::warning(nullptr, "파싱 실패", "JSON 파싱에 실패했습니다.");
-        return;
-    }
+        QJsonObject root = doc.object();
 
-    QJsonObject root = doc.object();
+        QString dateStr = root["date"].toString();
+        QString tagStr = root["tag"].toString();
+        if (tagEdit) tagEdit->setText(tagStr);
 
-    QString dateStr = root["date"].toString();
-    QString tagStr = root["tag"].toString();
-    if (tagEdit) tagEdit->setText(tagStr);
-
-    listWidget->clear();
+        listWidget->clear();
 
 
 
-    QJsonArray taskArray = root["tasks"].toArray();
-    for (const auto& val : taskArray) {
-        QJsonObject obj = val.toObject();
-        QString taskText = obj["task"].toString();
-        bool done = obj["done"].toBool();
+        QJsonArray taskArray = root["tasks"].toArray();
+        for (const auto& val : taskArray) {
+            QJsonObject obj = val.toObject();
+            QString taskText = obj["task"].toString();
+            bool done = obj["done"].toBool();
 
-        QListWidgetItem* item = new QListWidgetItem(listWidget);
-        item->setSizeHint(QSize(0, 40));
+            QListWidgetItem* item = new QListWidgetItem(listWidget);
+            item->setSizeHint(QSize(0, 40));
 
-        QWidget* taskWidget = new QWidget;
-        QHBoxLayout* layout = new QHBoxLayout(taskWidget);
-        layout->setContentsMargins(10, 0, 10, 0);
+            QWidget* taskWidget = new QWidget;
+            QHBoxLayout* layout = new QHBoxLayout(taskWidget);
+            layout->setContentsMargins(10, 0, 10, 0);
 
-        QCheckBox* checkBox = new QCheckBox(taskText);
-        checkBox->setChecked(done);
+            QCheckBox* checkBox = new QCheckBox(taskText);
+            checkBox->setChecked(done);
 
-        QFont font = checkBox->font();
-        font.setStrikeOut(done);
-        checkBox->setFont(font);
-
-        QPushButton* delButton = new QPushButton(QIcon::fromTheme("edit-delete"), "");
-        delButton->setFixedSize(24, 24);
-
-        layout->addWidget(checkBox);
-        layout->addWidget(delButton);
-        listWidget->setItemWidget(item, taskWidget);
-
-        QObject::connect(delButton, &QPushButton::clicked, [=]() {
-            deleteTask(listWidget, taskWidget);
-        });
-
-        QObject::connect(checkBox, &QCheckBox::checkStateChanged, [=](int state) {
             QFont font = checkBox->font();
-            font.setStrikeOut(state == Qt::Checked);
+            font.setStrikeOut(done);
             checkBox->setFont(font);
-        });
+
+            QPushButton* delButton = new QPushButton(QIcon::fromTheme("edit-delete"), "");
+            delButton->setFixedSize(24, 24);
+
+            layout->addWidget(checkBox);
+            layout->addWidget(delButton);
+            listWidget->setItemWidget(item, taskWidget);
+
+            QObject::connect(delButton, &QPushButton::clicked, [=]() {
+                deleteTask(listWidget, taskWidget);
+            });
+
+            QObject::connect(checkBox, &QCheckBox::checkStateChanged, [=](int state) {
+                QFont font = checkBox->font();
+                font.setStrikeOut(state == Qt::Checked);
+                checkBox->setFont(font);
+            });
+        }
+        isModified = false;
+    }catch(const std::exception& e){
+        qDebug() << "예외 처리 걸림: loadFromFile:" << e.what();
+        listWidget->clear();
+        if (tagEdit) tagEdit->clear();
+
+        QMessageBox::warning(nullptr, "파일로드실패", QString::fromStdString(e.what()));
     }
-    isModified = false;
+
+
+
 
 }
+
+
 void TodoList::saveToFile(QListWidget* listWidget, const QString& filepath, const QString& tagText, const QDate& selectedDate){
     QJsonArray taskArray;
 
