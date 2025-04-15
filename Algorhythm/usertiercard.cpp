@@ -18,9 +18,11 @@ UserTierCard::UserTierCard(QWidget* parent)
 
     // 카드 프레임 생성 - 배경색을 흰색(#FFFFFF)으로 설정
     cardFrame = new QFrame(this);
+    cardFrame->setObjectName("cardFrame");
     cardFrame->setFrameShape(QFrame::NoFrame);
     cardFrame->setStyleSheet("background-color: #FFFFFF; border-radius: 10px; padding: 10px;");
     cardFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    applyCardStyle();
 
     // 카드 내부 레이아웃
     QVBoxLayout* cardLayout = new QVBoxLayout(cardFrame);
@@ -89,8 +91,15 @@ void UserTierCard::setTierImage(const QString& imagePath)
         tierImageLabel->setFixedSize(100, 170);
     } else {
         // 이미지를 찾을 수 없는 경우 텍스트 표시
-        tierImageLabel->setText("No Image");
-        tierImageLabel->setStyleSheet("background-color: #cccccc; color: black; font-size: 10pt; text-align: center;");
+        tierImageLabel->setText("?");
+        tierImageLabel->setAlignment(Qt::AlignCenter);
+        tierImageLabel->setStyleSheet(R"(
+        background-color: #CDD9E4;
+        color: white;
+        font-size: 36pt;
+        font-weight: bold;
+        border-radius: 12px;
+        )");
     }
 }
 
@@ -261,8 +270,39 @@ void UserTierCard::loadTierImage(const QString& tierName)
         } else {
             // l_o.PNG도 없는 경우 텍스트 표시
             tierImageLabel->clear();
-            tierImageLabel->setText("No Image");
-            tierImageLabel->setStyleSheet("background-color: #cccccc; color: black; font-size: 14pt; text-align: center; border-radius: 10px;");
+
+            tierImageLabel->setText("?");
+            tierImageLabel->setAlignment(Qt::AlignCenter);
+            tierImageLabel->setStyleSheet(R"(
+            background-color: #CDD9E4;
+            color: white;
+            font-size: 36pt;
+            font-weight: bold;
+            border-radius: 12px;
+            )");
         }
+    }
+}
+
+
+void UserTierCard::applyCardStyle()
+{
+    if (!cardFrame) return;
+
+    cardFrame->setStyleSheet(R"(
+        QFrame#cardFrame {
+            background-color: #F9FAFB;
+            border: 1px sol8id #E5F0F8;
+            border-radius: 12px;
+        }
+
+        QFrame#cardFrame QLabel {
+            border: none;
+            background: transparent;
+        }
+    )");
+
+    if (cardFrame->layout()) {
+        cardFrame->layout()->setContentsMargins(20, 20, 20, 20);
     }
 }
