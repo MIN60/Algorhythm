@@ -16,6 +16,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     , ui(new Ui::Algorhythm)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0); //유저탭으로 시작
     applyTabStyle(ui->tabWidget);
 
     ui->USER->setStyleSheet("background-color: white;");
@@ -79,6 +80,8 @@ Algorhythm::Algorhythm(QWidget *parent)
         QDate date = QDate::fromString(item->text().trimmed(), "yyyy-MM-dd");
         todo.moveDate(date, ui->calendarWidget, ui->listWidgetTasks, ui->today_tag);
     });
+
+    ui->tag_search_result->setToolTip("더블클릭하면 해당 날짜의 TODO로 이동합니다");
 
 
     // 그냥 이동하면 경고
