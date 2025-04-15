@@ -15,7 +15,19 @@ Algorhythm::Algorhythm(QWidget *parent)
     , ui(new Ui::Algorhythm)
 {
     ui->setupUi(this);
+    applyTabStyle(ui->tabWidget);
+
+    ui->USER->setStyleSheet("background-color: white;");
+    ui->TODO->setStyleSheet("background-color: white;");
+
     this->setStyleSheet("background-color: #F9FAFB;");
+
+
+    ui->lineEditTask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    ui->lineEditTask->setMinimumHeight(50);
+
+    ui->pushButtonAdd->setFixedWidth(100);
+    ui->pushButtonAdd->setMinimumHeight(50);
 
     // 시작 시 기존 todo있으면 불러오기
     QDate today = ui->calendarWidget->selectedDate();
@@ -70,6 +82,34 @@ Algorhythm::Algorhythm(QWidget *parent)
 
 
 }
+
+
+void Algorhythm::applyTabStyle(QTabWidget* tabWidget)
+{
+    if (!tabWidget) return;
+
+    tabWidget->setStyleSheet(R"(
+        QTabWidget::pane {
+            border: none;
+        }
+
+        QTabBar::tab {
+            background: #E5F0F8;
+            color: #90A2B6;
+            font-weight: bold;
+            padding: 8px 24px;
+            margin-right: 4px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        QTabBar::tab:selected {
+            background: #116329;
+            color: white;
+        }
+    )");
+}
+
 
 
 Algorhythm::~Algorhythm()

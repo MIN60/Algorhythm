@@ -65,6 +65,18 @@
     </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <pointsize>15</pointsize>
@@ -140,10 +152,29 @@
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="tag_input"/>
+               <widget class="QLineEdit" name="tag_input">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Noto Sans KR</family>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QListWidget" name="tag_search_result">
+                <property name="font">
+                 <font>
+                  <family>Noto Sans KR</family>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
                 <property name="alternatingRowColors">
                  <bool>true</bool>
                 </property>
@@ -200,6 +231,24 @@
             <layout class="QHBoxLayout" name="inputLayout">
              <item>
               <widget class="QLineEdit" name="lineEditTask">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Noto Sans KR</family>
+                 <pointsize>15</pointsize>
+                </font>
+               </property>
                <property name="placeholderText">
                 <string>할 일 입력</string>
                </property>
@@ -207,6 +256,12 @@
              </item>
              <item>
               <widget class="QPushButton" name="pushButtonAdd">
+               <property name="minimumSize">
+                <size>
+                 <width>40</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="autoFillBackground">
                 <bool>false</bool>
                </property>
@@ -218,7 +273,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QListWidget" name="listWidgetTasks"/>
+            <widget class="QListWidget" name="listWidgetTasks">
+             <property name="font">
+              <font>
+               <family>Noto Sans KR</family>
+               <pointsize>15</pointsize>
+              </font>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="bottomButtonLayout">

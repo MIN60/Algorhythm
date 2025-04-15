@@ -16,6 +16,7 @@ class Algorhythm : public QMainWindow
 public:
     Algorhythm(QWidget *parent = nullptr);
     ~Algorhythm();
+    void applyTabStyle(QTabWidget* tabWidget);
 
 private:
     Ui::Algorhythm *ui;

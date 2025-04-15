@@ -184,7 +184,7 @@ void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QL
 
         QWidget* taskWidget = new QWidget;
         QHBoxLayout* layout = new QHBoxLayout(taskWidget);
-        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setContentsMargins(10, 0, 10, 0);
 
         QCheckBox* checkBox = new QCheckBox(taskText);
         checkBox->setChecked(done);
@@ -477,7 +477,7 @@ void TodoList::applyButtonStyle(QPushButton* button)
 {
     if (!button) return;
 
-    button->setMinimumSize(100, 30);
+    //button->setMinimumSize(100, 30);
 
     button->setStyleSheet(R"(
         QPushButton {
