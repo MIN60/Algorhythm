@@ -306,6 +306,12 @@ void TodoList::searchTagDates(QLineEdit* input, QListWidget* resultList)
 
     QString path = QDir::currentPath() + "/todo/tag_list.json";
     QFile file(path);
+
+    if (!file.exists()) {
+        QMessageBox::information(nullptr, "TODO 없음", "작성된 TODO가 없습니다.\n먼저 TODO를 작성해주세요.");
+        return;
+    }
+
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::warning(nullptr, "파일 열기 실패", "파일을 열 수 없습니다.");
         return;
