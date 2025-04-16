@@ -22,6 +22,7 @@ public:
 
     // NetworkManager를 받는 생성자
     void setNetworkManager(NetworkManager* networkManager);
+    void clearSearchResult();
 
 private slots:
     void handleProblemData(const QJsonObject &problemData);
@@ -40,5 +41,6 @@ private:
     void searchProblem(const QString& problemId);
     void addProblemToList(const Problem& p);
     void setupConnections();
+
 };
 #endif // USER_SEARCH_H

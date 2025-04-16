@@ -10,6 +10,7 @@
 #include "networkmanager.h"
 #include "userchart.h"
 #include "userrecommend.h"
+#include "usersearch.h"
 
 class UserGreeting : public QWidget {
     Q_OBJECT
@@ -22,6 +23,7 @@ public:
 
     void setUserChart(UserChart* chart);
     void setUserRecommend(UserRecommend* recommend);
+    void setUserSearch(UserSearch* search);
 
 signals:
     void loginSuccess(const QString &username);
@@ -63,6 +65,7 @@ private:
 
     //추천 리스트
     UserRecommend* userRecommend = nullptr;
+    UserSearch* userSearch = nullptr;
 
 
 

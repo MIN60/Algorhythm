@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QTimer>
 #include "usergreeting.h"
+#include "usersearch.h"
 
 TodoList todo;
 
@@ -20,7 +21,7 @@ Algorhythm::Algorhythm(QWidget *parent)
     ui->setupUi(this);
 
     ui->tabWidget->setCurrentIndex(0); //유저탭으로 시작
-
+    ui->user_greeting->setUserSearch(ui->user_search);
 
     networkManager = new NetworkManager(this);
     qDebug() << "user_chart:" << ui->user_chart;

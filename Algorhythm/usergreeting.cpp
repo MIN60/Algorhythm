@@ -1,6 +1,8 @@
 #include "usergreeting.h"
 #include <QMessageBox>
 #include <QMouseEvent>
+#include "usersearch.h"
+
 
 UserGreeting::UserGreeting(QWidget* parent)
     : QWidget(parent), loggedIn(false), currentUsername("")
@@ -275,6 +277,10 @@ void UserGreeting::logoutUser()
         userRecommend->clearList();  // 리스트 비우기
     }
 
+    if (userSearch) {
+        userSearch->clearSearchResult();
+    }
+
 
     // 로그아웃 완료 시그널 발생
     qDebug() << "로그아웃 완료 시그널 발생";
@@ -303,4 +309,8 @@ void UserGreeting::setUserChart(UserChart* chart)
 
 void UserGreeting::setUserRecommend(UserRecommend* recommend) {
     this->userRecommend = recommend;
+}
+
+void UserGreeting::setUserSearch(UserSearch* search) {
+    this->userSearch = search;
 }

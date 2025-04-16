@@ -223,3 +223,8 @@ void UserSearch::addProblemToList(const Problem& p)
     item->setToolTip("더블클릭 시 해당 문제의 페이지로 이동합니다.");
 }
 
+void UserSearch::clearSearchResult() {
+    resultList->clear();
+    statusLabel->clear();
+    searchInput->clear();
+}
