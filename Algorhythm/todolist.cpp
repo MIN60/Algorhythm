@@ -72,11 +72,11 @@ void TodoList::addTask(QListWidget* listWidget, const QString& taskText){
     listWidget->setItemWidget(item, taskWidget);
     isModified = true;
 
-    QObject::connect(checkbox, &QCheckBox::checkStateChanged, [checkbox](int state){
+    QObject::connect(checkbox, &QCheckBox::checkStateChanged, [checkbox, this](int state){
         QFont font = checkbox->font();
         font.setStrikeOut(state==Qt::Checked);
         checkbox->setFont(font);
-
+        isModified = true;
     });
 
 
@@ -210,6 +210,7 @@ void TodoList::loadFromFile(QListWidget* listWidget, const QString& filepath, QL
                 QFont font = checkBox->font();
                 font.setStrikeOut(state == Qt::Checked);
                 checkBox->setFont(font);
+                isModified = true;
             });
         }
         isModified = false;
