@@ -288,6 +288,7 @@ void UserTierCard::loadTierImage(const QString& tierName)
 void UserTierCard::applyCardStyle()
 {
     if (!cardFrame) return;
+    cardFrame->setMaximumHeight(280);
 
     cardFrame->setStyleSheet(R"(
         QFrame#cardFrame {
