@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QTimer>
+#include "usergreeting.h"
 
 TodoList todo;
 
@@ -41,6 +42,9 @@ Algorhythm::Algorhythm(QWidget *parent)
 
     qDebug() << "Algorhythm UI 설정 완료";
     qDebug() << "UserSearch 표시 상태:" << ui->user_search->isVisible();
+    ui->user_greeting->setUserRecommend(ui->user_recommend);
+
+
 
     // 신호-슬롯 연결
     connect(ui->user_greeting, &UserGreeting::loginSuccess,

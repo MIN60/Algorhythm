@@ -219,3 +219,14 @@ void UserRecommend::setRecommend(const QList<RecommendProblem>& list)
         qDebug() << "리스트에 추가:" << p.id << p.title;
     }
 }
+
+void UserRecommend::clearList()
+{
+    if (listWidget) {
+        listWidget->clear();
+    }
+    if (statusLabel) {
+        statusLabel->clear();
+    }
+}
+

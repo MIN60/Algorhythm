@@ -19,6 +19,7 @@ public:
     explicit UserRecommend(QWidget* parent = nullptr);
     void setRecommend(const QList<RecommendProblem>& list);
     void setNetworkManager(NetworkManager* manager);
+    void clearList();
 
 public slots:
     void loadRecommendations(const QString& handle);
@@ -33,5 +34,6 @@ private:
     NetworkManager* networkManager;
     QLabel* statusLabel;
     void setupConnections();
+
 };
 #endif // USER_RECOMMEND_H

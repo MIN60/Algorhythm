@@ -9,6 +9,7 @@
 #include "usertiercard.h"
 #include "networkmanager.h"
 #include "userchart.h"
+#include "userrecommend.h"
 
 class UserGreeting : public QWidget {
     Q_OBJECT
@@ -20,6 +21,7 @@ public:
     QString getCurrentUsername() const { return currentUsername; }
 
     void setUserChart(UserChart* chart);
+    void setUserRecommend(UserRecommend* recommend);
 
 signals:
     void loginSuccess(const QString &username);
@@ -58,6 +60,9 @@ private:
 
     // 차트
     UserChart* userChart = nullptr;
+
+    //추천 리스트
+    UserRecommend* userRecommend = nullptr;
 
 
 

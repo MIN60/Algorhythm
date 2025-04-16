@@ -270,6 +270,11 @@ void UserGreeting::logoutUser()
     }
 
 
+    // 추천 리스트 비우기
+    if (userRecommend) {
+        userRecommend->clearList();  // 리스트 비우기
+    }
+
 
     // 로그아웃 완료 시그널 발생
     qDebug() << "로그아웃 완료 시그널 발생";
@@ -293,4 +298,9 @@ void UserGreeting::setTier(const QString& tierName)
 void UserGreeting::setUserChart(UserChart* chart)
 {
     this->userChart = chart;
+}
+
+
+void UserGreeting::setUserRecommend(UserRecommend* recommend) {
+    this->userRecommend = recommend;
 }
